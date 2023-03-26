@@ -9,8 +9,7 @@ INCLUDEPATH += source
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += \
-    source/models/client.cpp
+SOURCES += source/models/client.cpp
 
 HEADERS += \
     source/cm-lib_global.h \
