@@ -1,19 +1,27 @@
-#include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QGuiApplication>
+#include <QQmlContext>
 
+#include <controllers/master-controller.h>
 
 int main(int argc, char *argv[])
 {
+#if defined(Q_OS_WIN)
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
+
     QGuiApplication app(argc, argv);
 
+    qmlRegisterType<cm::controllers::MasterController>("CM", 1, 0, "MasterController");
+
+    cm::controllers::MasterController masterController;
+
     QQmlApplicationEngine engine;
-    const QUrl url(u"qrc:Masterview.qml"_qs);
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-                     &app, [url](QObject *obj, const QUrl &objUrl) {
-        if (!obj && url == objUrl)
-            QCoreApplication::exit(-1);
-    }, Qt::QueuedConnection);
-    engine.load(url);
+    engine.rootContext()->setContextProperty("masterController", &masterController);
+    engine.load(QUrl(QStringLiteral("qrc:/views/MasterView.qml")));
+
+    if (engine.rootObjects().isEmpty())
+        return -1;
 
     return app.exec();
 }
