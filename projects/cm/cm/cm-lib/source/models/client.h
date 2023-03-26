@@ -3,10 +3,10 @@
 
 #include "cm-lib_global.h"
 
-class CMLIB_EXPORT client
+class CMLIBSHARED_EXPORT Client
 {
 public:
-    client();
+    Client();
 };
 
 #endif // CLIENT_H
